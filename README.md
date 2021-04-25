@@ -10,11 +10,11 @@ This repository contains a library for C programming language. The library consi
 | append_llstring 	| `LL_StringNode* x, LL_StringNode* y, u_int16_t p` 	|  	| The function appends `x` to `y` in position `p`. 	|
 | printf_llstring | `LL_StringNode*` | | Prints the string.|
 | ll_strcpy | `LL_StringNode* d, LL_StringNode* s` | LL_StringNode *d | The function copies content of `s` to `d`. To use the function, `d` must be a next-letter-is-NULL LL_StringNode. |
-| ll_strcpy | `LL_StringNode* d, LL_StringNode* s, u_int16_t n` | LL_StringNode *d | The function copies content of `s` to `d` for first `n` characters. To use the function, `d` must be a next-letter-is-NULL LL_StringNode. |
+| ll_strncpy | `LL_StringNode* d, LL_StringNode* s, u_int16_t n` | LL_StringNode *d | The function copies content of `s` to `d` for first `n` characters. To use the function, `d` must be a next-letter-is-NULL LL_StringNode. |
 | ll_strlen | `LL_StringNode* | size_t | The function returns length of the llstring. |
 | ll_strcat | `LL_StringNode* x, LL_StringNode* y` | LLStringNode* x | The function appends the y into end of the x. |
 | ll_strcmp | `LL_StringNode*, LL_StringNode*` | 1, -1, or 0 | The function works exactly same as strcmp. 0 means both llstrings are equal. It compares two llstring and if there is a difference, return which one have higher ASCII number. | 
-| ll_strcmp | `LL_StringNode*, LL_StringNode*, u_int16_t n` | 1, -1, or 0 |  The function works exactly same as strcmp. 0 means both llstrings are equal. It compares two llstring for first `n` characters and if there is a difference, return which one have higher ASCII number. |
+| ll_strncmp | `LL_StringNode*, LL_StringNode*, u_int16_t n` | 1, -1, or 0 |  The function works exactly same as strcmp. 0 means both llstrings are equal. It compares two llstring for first `n` characters and if there is a difference, return which one have higher ASCII number. |
 
 ## Further Works
 * Need to implement remaining functions.
