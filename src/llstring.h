@@ -26,17 +26,16 @@ LL_StringNode *ll_strcat (LL_StringNode*, LL_StringNode*);
 int ll_strcmp (LL_StringNode*, LL_StringNode*);
 int ll_strncmp (LL_StringNode*, LL_StringNode*, u_int16_t);
 void printf_llstring (LL_StringNode*);
+LL_StringNode *ll_strchr (LL_StringNode*, char);
+LL_StringNode *ll_strrchr (LL_StringNode*, char);
+size_t ll_strcspn (LL_StringNode*, LL_StringNode*);
+LL_StringNode *ll_strpbrk (LL_StringNode*, LL_StringNode*);
+size_t ll_strspn (LL_StringNode*, LL_StringNode*);
+LL_StringNode *ll_strstr (LL_StringNode*, LL_StringNode*);
 
 /*    Not Implemented   */
 //LL_StringNode *ll_strncat (LL_StringNode*, LL_StringNode*, u_int16_t);
 //int ll_strcoll (LL_StringNode* ,LL_StringNode*);
-//LL_StringNode *ll_strchr (LL_StringNode*, char);
-//size_t ll_strcspn (LL_StringNode*, LL_StringNode*);
-//LL_StringNode *ll_strpbrk (LL_StringNode*, LL_StringNode*);
-//LL_StringNode *ll_strrchr (LL_StringNode*, LL_StringNode*);
-//size_t ll_strspn (LL_StringNode*, LL_StringNode*);
-//LL_StringNode *ll_strstr (LL_StringNode*, LL_StringNode*);
 //LL_StringNode *ll_strtok (LL_StringNode*, LL_StringNode*);
-
 
 #endif //LL_STRING__LLSTRING_H_
