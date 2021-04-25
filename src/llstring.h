@@ -17,6 +17,7 @@ typedef struct ll_letter_node {
 LL_StringNode* create_llstring (const char[]);
 void delete_character (LL_StringNode*, u_int16_t);
 void append_llstring (LL_StringNode*, LL_StringNode*, u_int16_t);
+char *llstr2char (LL_StringNode*);
 
 /*    String Manipulation Functions   */
 LL_StringNode *ll_strcpy (LL_StringNode*, LL_StringNode*);

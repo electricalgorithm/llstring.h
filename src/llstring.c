@@ -71,6 +71,25 @@ void append_llstring (LL_StringNode *appended, LL_StringNode *source, u_int16_t 
   _src->next_letter = appended;
 }
 
+char *llstr2char (LL_StringNode *llstring) {
+  size_t size_of_llstring = ll_strlen(llstring);
+  char *str = (char *) malloc(sizeof(char) * size_of_llstring);
+
+  u_int16_t cursor_char = 0;
+  LL_StringNode *cursor_ll = llstring;
+  while (cursor_ll != NULL) {
+    // Copying the cursor_ll to str[cursor_char]
+   str[cursor_char] = cursor_ll->character;
+   // Going to next cursors
+   cursor_char++;
+   cursor_ll = cursor_ll->next_letter;
+  }
+  // Adding EOL to end of the string
+  str[cursor_char] = '\0';
+  return str;
+}
+
+
 /*    String Manipulation Functions   */
 LL_StringNode *ll_strcpy (LL_StringNode* destination, LL_StringNode* source) {
   LL_StringNode *_cursor_src = source;
@@ -88,12 +107,9 @@ LL_StringNode *ll_strcpy (LL_StringNode* destination, LL_StringNode* source) {
     _cursor_dest = _cursor_dest->next_letter;
     _cursor_src = _cursor_src->next_letter;
   }
-
-
   return destination;
 }
 
-/*    String Manipulation Functions   */
 LL_StringNode *ll_strncpy (LL_StringNode* destination, LL_StringNode* source, u_int16_t count) {
   LL_StringNode *_cursor_src = source;
   LL_StringNode *_cursor_dest = destination;
