@@ -12,28 +12,33 @@ LL_StringNode* create_llstring (const char char_array[]) {
   u_int16_t char_pos = 0;
   while (char_array[char_pos] != '\0') {
     temp = (LL_StringNode *) malloc(sizeof(LL_StringNode));
-    temp->character = char_array[char_pos];
+    if (temp != NULL) {
+      temp->character = char_array[char_pos];
 
-    // Previous Letter Assignment
-    if (!char_pos) temp->prev_letter = NULL;
-    else temp->prev_letter = temp_before;
+      // Previous Letter Assignment
+      if (!char_pos) temp->prev_letter = NULL;
+      else temp->prev_letter = temp_before;
 
-    // Next Letter Assigment
-    temp->next_letter = NULL;
-    if (char_pos) temp_before->next_letter = temp;
+      // Next Letter Assigment
+      temp->next_letter = NULL;
+      if (char_pos) temp_before->next_letter = temp;
 
-    // Assigning Node to Not Forget
-    if (!char_pos) head = temp;
-    temp_before = temp;
+      // Assigning Node to Not Forget
+      if (!char_pos) head = temp;
+      temp_before = temp;
 
-    // Next letter in the char[]
-    char_pos++;
+      // Next letter in the char[]
+      char_pos++;
+    } else {
+      perror("Stack overflow happen.");
+      return NULL;
+    }
   }
 
   return head;
 }
 
-void delete_character (LL_StringNode *llstring, u_int16_t index) {
+void delete_character (LL_StringNode *llstring, const u_int16_t index) {
   LL_StringNode *node = llstring;
 
   // Going to (index)th node
@@ -54,7 +59,7 @@ void delete_character (LL_StringNode *llstring, u_int16_t index) {
   free(node);
 }
 
-void append_llstring (LL_StringNode *appended, LL_StringNode *source, u_int16_t index) {
+void append_llstring (LL_StringNode *appended, LL_StringNode *source, const u_int16_t index) {
   LL_StringNode *_src = source;
   LL_StringNode *_appn = appended;
 
@@ -75,18 +80,24 @@ char *llstr2char (LL_StringNode *llstring) {
   size_t size_of_llstring = ll_strlen(llstring);
   char *str = (char *) malloc(sizeof(char) * size_of_llstring);
 
-  u_int16_t cursor_char = 0;
-  LL_StringNode *cursor_ll = llstring;
-  while (cursor_ll != NULL) {
-    // Copying the cursor_ll to str[cursor_char]
-   str[cursor_char] = cursor_ll->character;
-   // Going to next cursors
-   cursor_char++;
-   cursor_ll = cursor_ll->next_letter;
+  if (str != NULL) {
+    // If str correctly allocated
+    u_int16_t cursor_char = 0;
+    LL_StringNode *cursor_ll = llstring;
+    while (cursor_ll!=NULL) {
+      // Copying the cursor_ll to str[cursor_char]
+      str[cursor_char] = cursor_ll->character;
+      // Going to next cursors
+      cursor_char++;
+      cursor_ll = cursor_ll->next_letter;
+    }
+    // Adding EOL to end of the string
+    str[cursor_char] = '\0';
+    return str;
+  } else {
+    perror("Stack overflow happen.");
+    return NULL;
   }
-  // Adding EOL to end of the string
-  str[cursor_char] = '\0';
-  return str;
 }
 
 
@@ -98,7 +109,14 @@ LL_StringNode *ll_strcpy (LL_StringNode* destination, LL_StringNode* source) {
 
   while (_cursor_src != NULL) {
     // Assigning properties of that struct
-    if (_cursor_src->next_letter != NULL) _cursor_dest->next_letter = (LL_StringNode *) malloc(sizeof(LL_StringNode));
+    if (_cursor_src->next_letter != NULL) {
+      _cursor_dest->next_letter = (LL_StringNode *) malloc(sizeof(LL_StringNode));
+      // Checking if it is correctly allocated
+      if (_cursor_dest->next_letter == NULL) {
+        perror("Stack overflow happen.");
+        return NULL;
+      }
+    }
     _cursor_dest->prev_letter = _cursor_dest_prev;
     _cursor_dest->character = _cursor_src->character;
 
@@ -110,7 +128,7 @@ LL_StringNode *ll_strcpy (LL_StringNode* destination, LL_StringNode* source) {
   return destination;
 }
 
-LL_StringNode *ll_strncpy (LL_StringNode* destination, LL_StringNode* source, u_int16_t count) {
+LL_StringNode *ll_strncpy (LL_StringNode* destination, LL_StringNode* source, const u_int16_t count) {
   LL_StringNode *_cursor_src = source;
   LL_StringNode *_cursor_dest = destination;
   LL_StringNode *_cursor_dest_prev = NULL;
@@ -118,7 +136,13 @@ LL_StringNode *ll_strncpy (LL_StringNode* destination, LL_StringNode* source, u_
 
   while (_cursor_src != NULL && counter <= count-1) {
     // Assigning properties of that struct
-    if (_cursor_src->next_letter != NULL && counter+1 <= count-1) _cursor_dest->next_letter = (LL_StringNode *) malloc(sizeof(LL_StringNode));
+    if (_cursor_src->next_letter != NULL && counter+1 <= count-1) {
+      _cursor_dest->next_letter = (LL_StringNode *) malloc(sizeof(LL_StringNode));
+      if (_cursor_dest->next_letter == NULL) {
+        perror("Stack overflow happen.");
+        return NULL;
+      }
+    }
     _cursor_dest->prev_letter = _cursor_dest_prev;
     _cursor_dest->character = _cursor_src->character;
 
@@ -168,7 +192,7 @@ int ll_strcmp (LL_StringNode *llstr1, LL_StringNode *llstr2) {
   return 0;
 }
 
-int ll_strncmp (LL_StringNode* llstr1, LL_StringNode* llstr2, u_int16_t count) {
+int ll_strncmp (LL_StringNode* llstr1, LL_StringNode* llstr2, const u_int16_t count) {
   LL_StringNode *_cursor1  = llstr1;
   LL_StringNode *_cursor2  = llstr2;
   u_int16_t counter = 0;
@@ -203,7 +227,7 @@ void printf_llstring (LL_StringNode* llstring) {
   }
 }
 
-LL_StringNode *ll_strchr (LL_StringNode* llstring, char to_look) {
+LL_StringNode *ll_strchr (LL_StringNode* llstring, const char to_look) {
   // Creating a cursor to travel.
   LL_StringNode *cursor = llstring;
   while (cursor != NULL) {
@@ -216,7 +240,7 @@ LL_StringNode *ll_strchr (LL_StringNode* llstring, char to_look) {
   return NULL;
 }
 
-LL_StringNode *ll_strrchr (LL_StringNode* llstring, char to_look) {
+LL_StringNode *ll_strrchr (LL_StringNode* llstring, const char to_look) {
   // Creating a cursor to travel
   LL_StringNode *cursor = llstring;
 
@@ -244,7 +268,7 @@ size_t ll_strcspn (LL_StringNode* llstring_scanned, LL_StringNode* llstring_2mat
     while (cursor_match != NULL) {
       // If found, return the position
       if (cursor_scan->character == cursor_match->character) return position;
-      // Go to next letter in the llstring we want to search with.
+        // Go to next letter in the llstring we want to search with.
       else cursor_match = cursor_match->next_letter;
     }
     // Increasing position
